@@ -57,11 +57,15 @@ This is a learning project designed to reinforce concepts in Angular development
 - **Framework**  
   Built using the **Angular** framework
 
+- **Design**  
+  inspired by [Pomodoro App on Dribbble](https://dribbble.com/shots/15385822-Pomodoro-App)
+
+
 ---
 
 ## 🚧 Status
 
-Currently in development as a learning project. 
+Currently in development as a learning project.
 
 ## In progress
 
