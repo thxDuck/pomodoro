@@ -1,59 +1,68 @@
 # PomodoroApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
+A focused time-management app built with Angular, inspired by the Pomodoro Technique.  
+This is a learning project designed to reinforce concepts in Angular development, mobile-first design, and dark theme UI.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🔧 Features & User Stories
 
-```bash
-ng serve
-```
+### 1. 🎯 Configure Pomodoro
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Given**: I'm on the configuration page  
+- **Then**: I can adjust Pomodoro settings:
+  - Work time duration
+  - Break durations (short and long)
+  - Number of sessions before a long break
+  - Enable/disable auto-start for breaks
 
-## Code scaffolding
+### 2. ▶️ Start Pomodoro
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Given**: I'm on the Home page  
+- **When**: I click the **Play** button  
+- **Then**: The timer starts counting down  
+- **And**: The Pomodoro enters "Work" mode
 
-```bash
-ng generate component component-name
-```
+### 3. 📝 Enter a Task
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **Given**: I'm on the Home page  
+- **When**: I type a task like *"Create Feature Repository"*  
+- **And**: I click the **Play** button  
+- **Then**: The task input becomes disabled (locked)
 
-```bash
-ng generate --help
-```
+### 4. ⏸ Pause & Resume
 
-## Building
+- **Given**: I'm in "Work" or "Break" mode  
+- **When**: I click **Pause**  
+- **Then**: The timer stops  
+- **When**: I click **Resume**  
+- **Then**: The timer resumes
 
-To build the project run:
+### 5. ⏭ Skip Break
 
-```bash
-ng build
-```
+- **Given**: I'm in a break session  
+- **When**: I click the **Skip** button  
+- **Then**: The timer jumps to the next session (usually back to "Work")
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 📱 Design Constraints
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **Mobile-First Design**  
+  Target resolution: `375x812` (iPhone 12 Mini)
 
-```bash
-ng test
-```
+- **Dark Theme**  
+  Entire app uses a dark UI palette
 
-## Running end-to-end tests
+- **Framework**  
+  Built using the **Angular** framework
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## 🚧 Status
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Currently in development as a learning project. 
 
-## Additional Resources
+## In progress
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Initial setup (setup angular and hello world ok the Home page)
