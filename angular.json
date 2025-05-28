@@ -8,6 +8,7 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
+          "path": "src/components",
           "skipTests": true
         },
         "@schematics/angular:class": {
