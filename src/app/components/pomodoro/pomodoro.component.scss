@@ -1,8 +1,53 @@
+@import "../../../scss/variables.scss";
+
 .pomodoro {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	height: 100%;
 	flex: 1;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+
+	margin-bottom: 2rem;
+
+	.task {
+		justify-items: flex-start;
+
+		display: flex;
+		justify-content: center;
+		width: 90%;
+
+		input {
+			border: unser;
+			background: unset;
+			border-radius: 25rem;
+			width: 100%;
+			padding: 0.7rem 1rem;
+			background-color: $color-secondary;
+		}
+	}
+
+	.timer__watch {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		min-width: 250px;
+		width: 500px;
+		max-width: 66vw;
+
+		min-height: 250px;
+		height: 500px;
+		max-height: 66vw;
+
+		border: 1px solid violet;
+		border-radius: 100%;
+
+		&__counter {
+			text-align: center;
+			font-size: 3rem;
+			font-weight: 600;
+		}
+	}
 }

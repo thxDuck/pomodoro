@@ -1,3 +1,5 @@
+@import "./scss/variables.scss";
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -134,15 +136,10 @@ table {
 	border-spacing: 0;
 }
 
-$color-dark: #1f1b2e;
-$color-white: #eeeeee;
-$color-primary: #664eff;
-$color-secondary: #6c4eb3;
+input {
+  all: unset;
+}
 
-$background-color: $color-dark;
-$text-color: $color-white;
-$color-primary: $color-primary;
-$color-secondary: $color-secondary;
 
 html[data-theme="dark"] {
 	$background-color: $color-dark;
