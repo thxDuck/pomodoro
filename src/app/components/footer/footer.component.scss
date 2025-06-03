@@ -1,0 +1,16 @@
+nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	gap: 0.7rem;
+
+	min-height: 7vh;
+	width: 100%;
+
+	li {
+		list-style: none;
+		cursor: pointer;
+		text-align: center;
+	}
+}
