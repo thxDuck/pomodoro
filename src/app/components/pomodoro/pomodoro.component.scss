@@ -33,21 +33,47 @@
 		flex-direction: column;
 		justify-content: center;
 
-		min-width: 250px;
-		width: 500px;
-		max-width: 66vw;
+		width: 225px;
 
-		min-height: 250px;
-		height: 500px;
-		max-height: 66vw;
+		height: 225px;
 
-		border: 1px solid violet;
+		border: 10px solid $color-primary;
 		border-radius: 100%;
+
+		box-shadow: 0px 0px 0px 20px rgba(102, 78, 255, 0.15);
+		-webkit-box-shadow: 0px 0px 0px 20px rgba(102, 78, 255, 0.15);
+		-moz-box-shadow: 0px 0px 0px 20px rgba(102, 78, 255, 0.15);
 
 		&__counter {
 			text-align: center;
 			font-size: 3rem;
 			font-weight: 600;
+		}
+	}
+
+	.action .action__button {
+		width: 75px;
+		height: 75px;
+		border-radius: 100%;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		text-align: center;
+		background-color: $color-primary;
+
+		box-shadow: 0px 0px 30px 8px rgba(102, 78, 255, 0.47);
+		-webkit-box-shadow: 0px 0px 30px 8px rgba(102, 78, 255, 0.47);
+		-moz-box-shadow: 0px 0px 30px 8px rgba(102, 78, 255, 0.47);
+
+		img {
+			width: 50px;
+			transition: all 0.3s;
+			&:hover {
+				transform: scale(1.1);
+			}
 		}
 	}
 }
