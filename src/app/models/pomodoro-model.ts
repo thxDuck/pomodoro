@@ -9,15 +9,14 @@ export class Pomodoro {
 	public autoStartFocus: boolean;
 
 	public state: State = 'paused';
-
 	constructor({
-		focusTime = SecondDurations.Minute * 25,
+		focusTime = SecondDurations.Second * 100,
 		shortBreakTime = SecondDurations.Minute * 5,
 		longBreakTime = SecondDurations.Minute * 15,
 		focusSessions = 4,
 		autoStartBreak = false,
 		autoStartFocus = false,
-	}: Partial<PomodoroSettings>) {
+	}: Partial<PomodoroSettings> = {}) {
 		this.focusTime = focusTime;
 		this.shortBreakTime = shortBreakTime;
 		this.longBreakTime = longBreakTime;
