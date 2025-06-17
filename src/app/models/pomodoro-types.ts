@@ -1,5 +1,5 @@
 export enum SecondDurations {
-	Second = 1000 * 1,
+	Second = 1,
 	Minute = Second * 60,
 	Hour = Minute * 60,
 }
