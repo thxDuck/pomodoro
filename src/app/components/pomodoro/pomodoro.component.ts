@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { PomodoroSettings } from '../../models/pomodoro-types';
+import { PomodoroSettings, SecondDurations } from '../../models/pomodoro-types';
 import { Pomodoro } from '../../models/pomodoro-model';
 import { handleAllValues } from '../../utilities/utilities';
 import { Temporal } from 'temporal-polyfill';
 
 const ONE_SEC_DURATION = 'PT1S';
+type PomodoroState = {
+	type: 'focus' | 'short_break' | 'long_break';
+	duration: number;
+};
 
 @Component({
 	selector: 'app-pomodoro',
@@ -13,87 +17,137 @@ const ONE_SEC_DURATION = 'PT1S';
 	styleUrl: './pomodoro.component.scss',
 })
 export class PomodoroComponent implements OnInit {
-	public progress = 0;
-	public pomodoro = new Pomodoro();
-
-	public playIconPath = 'images/icons/play_icon.svg';
-	public pauseIconPath = 'images/icons/pause_icon.svg';
-
-	public timeRemaining!: Temporal.Duration;
+	public pomodoroSettings = new Pomodoro();
+	public stepsContext: PomodoroState[] = [];
+	public currentStepIndex = -1;
+	public currentStep!: PomodoroState;
+	public timerState: 'running' | 'paused' = 'paused';
 	public timer?: number;
+	public timeRemaining!: Temporal.Duration;
 
-	ngOnInit(): void {
-		this.timeRemaining = this.getDurationFromSeconds(
-			this.pomodoro.focusTime
-		);
-		this.updateTimerProgressBar(0);
+	constructor() {
+		this.stepsContext = [
+			{
+				type: 'focus',
+				duration:
+					this.pomodoroSettings.focusTime +
+					SecondDurations.Second * 20,
+			},
+			{
+				type: 'short_break',
+				duration: this.pomodoroSettings.shortBreakTime,
+			},
+			{ type: 'focus', duration: this.pomodoroSettings.focusTime },
+			{
+				type: 'short_break',
+				duration: this.pomodoroSettings.shortBreakTime,
+			},
+			{ type: 'focus', duration: this.pomodoroSettings.focusTime },
+			{
+				type: 'long_break',
+				duration: this.pomodoroSettings.longBreakTime,
+			},
+		];
+		this.currentStepIndex = -1;
+		this.loadNextContext();
 	}
+
+	ngOnInit(): void {}
 	private getDurationFromSeconds(totalSeconds: number): Temporal.Duration {
 		const minutes = Math.floor(totalSeconds / 60);
 		const seconds = totalSeconds - minutes * 60;
 		return Temporal.Duration.from({ minutes, seconds });
 	}
-	play() {
-		const image = document.querySelector('.action .action__button img');
-		image?.setAttribute('src', this.pauseIconPath);
-		this.startTimer();
+	private loadNextContext() {
+		this.currentStepIndex++;
+		console.log(this.currentStepIndex);
+
+		const nextStep = this.stepsContext.at(
+			this.currentStepIndex % this.stepsContext.length
+		);
+		if (!nextStep) throw new Error('Invalid step !');
+		console.log(nextStep);
+		const duration = this.getDurationFromSeconds(nextStep?.duration);
+		this.timeRemaining = duration;
+		const { minutes, seconds } = duration;
+
+		this.updateChrono({ minutes, seconds });
+		this.updateProgressBar(0);
+
+		this.currentStep = nextStep;
 	}
 
-	pause() {
-		const image = document.querySelector('.action .action__button img');
-		image?.setAttribute('src', this.playIconPath);
-		this.stopTimer();
+	/* -------------------------------------------------------------------------- */
+	/*                                    Logic                                   */
+	/* -------------------------------------------------------------------------- */
+
+	public stopTimer() {
+		this.timerState = 'paused';
+		this.updateplayButton('play');
+		clearInterval(this.timer);
 	}
 
-	playButtonPress() {
-		switch (this.pomodoro.state) {
-			case 'focus':
-				this.pause();
-				break;
-			case 'break':
-			case 'paused':
-				this.play();
-				break;
+	public runTimer() {
+		this.timerState = 'running';
+		this.updateplayButton('pause');
+		// Binding of this beacause of the function calling system
+		this.timer = window.setInterval(this.countDouwn.bind(this), 1000);
+	}
 
-			default:
-				handleAllValues(this.pomodoro.state);
-				break;
-		}
-	}
-	public remainingTime = Temporal.Duration.from({
-		minutes: 15,
-		seconds: 36,
-	});
-	updateTimerChrono() {
-		const counter = document.querySelector('.timer__watch__counter');
-		if (counter)
-			counter.textContent = `${this.timeRemaining.minutes}:${this.timeRemaining.seconds}`;
-	}
-	incrementDuration() {
+	public countDouwn() {
 		this.timeRemaining = this.timeRemaining.subtract(ONE_SEC_DURATION);
 		const secondsRemains = this.timeRemaining.total('seconds');
 		const totalPercent = Math.floor(
-			(secondsRemains * 100) / this.pomodoro.focusTime
+			(secondsRemains * 100) / this.currentStep.duration
 		);
-		this.progress = 100 - totalPercent;
-		this.updateTimerChrono();
-		this.updateTimerProgressBar(this.progress % 100);
-	}
-	startTimer() {
-		this.pomodoro.state = 'focus';
-		this.timer = window.setInterval(this.incrementDuration.bind(this), 1000);
-	}
-	stopTimer() {
-		this.pomodoro.state = 'paused';
 
-		clearInterval(this.timer);
+		this.updateChrono({
+			minutes: this.timeRemaining.minutes,
+			seconds: this.timeRemaining.seconds,
+		});
+		this.updateProgressBar((100 - totalPercent) % 100);
+	}
+
+	/* -------------------------------------------------------------------------- */
+	/*                                 User Actions                               */
+	/* -------------------------------------------------------------------------- */
+
+	playButtonPress() {
+		switch (this.timerState) {
+			case 'running':
+				this.stopTimer();
+				break;
+			case 'paused':
+				this.runTimer();
+				break;
+
+			default:
+				handleAllValues(this.timerState);
+				break;
+		}
+	}
+
+	/* -------------------------------------------------------------------------- */
+	/*                                    Html                                    */
+	/* -------------------------------------------------------------------------- */
+
+	public updateplayButton(type: 'play' | 'pause') {
+		const image = document.querySelector('.action .action__button img');
+		image?.setAttribute('src', `images/icons/${type}_icon.svg`);
+	}
+
+	public updateChrono(durations: { minutes: number; seconds: number }) {
+		const { minutes, seconds } = durations;
+		const nbSeconds = seconds < 10 ? `0${seconds}` : seconds;
+		const htmlCounter = document.querySelector('.timer__watch__counter');
+		if (htmlCounter) htmlCounter.textContent = `${minutes}:${nbSeconds}`;
 	}
 
 	/**
 	 * Update timer style to match time spent
 	 * @param percent Percent of time past.
 	 */
-	updateTimerProgressBar(percent: number): void {
+	updateProgressBar(percent: number): void {
 		const circle = document.querySelector(
 			'.timer__progress-bar'
 		) as SVGCircleElement;

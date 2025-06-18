@@ -10,7 +10,7 @@ export class Pomodoro {
 
 	public state: State = 'paused';
 	constructor({
-		focusTime = SecondDurations.Second * 100,
+		focusTime = SecondDurations.Minute * 25,
 		shortBreakTime = SecondDurations.Minute * 5,
 		longBreakTime = SecondDurations.Minute * 15,
 		focusSessions = 4,
