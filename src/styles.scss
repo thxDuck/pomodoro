@@ -1,20 +1,17 @@
-@import "./scss/variables.scss";
-@import "./scss/reset-css.scss";
+@use "./scss/variables.scss" as vars;
+@forward "./scss/reset-css.scss";
 
+// html[data-theme="dark"] {
+// 	background-color: $color-dark;
+// 	color: $color-white;
+// }
 
-html[data-theme="dark"] {
-	$background-color: $color-dark;
-	$text-color: $color-white;
-	$color-primary: $color-primary;
-	$color-secondary: $color-secondary;
-}
-
-html[data-theme="light"] {
-	$background-color: $color-white;
-	$text-color: $color-dark;
-	$color-primary: $color-primary;
-	$color-secondary: $color-secondary;
-}
+// html[data-theme="light"] {
+// 	$background-color: $color-white;
+// 	$text-color: $color-dark;
+// 	$color-primary: $color-primary;
+// 	$color-secondary: $color-secondary;
+// }
 
 body {
 	box-sizing: border-box;
@@ -25,9 +22,9 @@ body {
 	font-family: "Work Sans", sans-serif;
 	font-optical-sizing: auto;
 	font-style: normal;
-	color: $text-color;
+	color: vars.$text-color;
 
-	background: $background-color;
+	background: vars.$background-color;
 }
 
 app-pomodoro {
