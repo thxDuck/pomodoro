@@ -60,6 +60,11 @@ This is a learning project designed to reinforce concepts in Angular development
 - **Design**  
   inspired by [Pomodoro App on Dribbble](https://dribbble.com/shots/15385822-Pomodoro-App)
 
+## Documentation
+
+### Libraries
+
+- [temporal-polyfill](https://www.npmjs.com/package/temporal-polyfill): polyfill for the js Tomporal API (actualy in stage 3 of TC39 proposal). I use this polyfill library beacause it's the lightest lib I've found, it will be removed once the API has been implemented in all browsers.
 
 ---
 

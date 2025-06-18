@@ -5,8 +5,12 @@
 
     <div class="timer">
         <div class="timer__watch">
+            <svg class="timer__progress" viewBox="0 0 100 100">
+                <circle class="timer__progress-bg" cx="50" cy="50" r="45" />
+                <circle class="timer__progress-bar" cx="50" cy="50" r="45" />
+            </svg>
+            <div class="timer__dot"></div>
             <span class="timer__watch__counter">15:00</span>
-
         </div>
     </div>
 
@@ -15,10 +19,8 @@
     </div>
 
     <div class="action">
-        <button class="action__button">
-            <img src="images/icons/pause_icon.svg" alt="">
-
+        <button class="action__button" (click)="playButtonPress()">
+            <img src="images/icons/play_icon.svg" alt="">
         </button>
     </div>
-
 </section>
