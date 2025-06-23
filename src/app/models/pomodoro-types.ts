@@ -12,4 +12,4 @@ export interface PomodoroSettings {
 	autoStartBreak: boolean;
 	autoStartFocus: boolean;
 }
-export type State = 'focus' | 'break' | 'paused';
+export type State = "focus" | "break" | "paused";
