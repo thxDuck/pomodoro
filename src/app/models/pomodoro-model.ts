@@ -1,4 +1,8 @@
-import { PomodoroSettings, SecondDurations, State } from './pomodoro-types';
+import {
+	type PomodoroSettings,
+	SecondDurations,
+	type State,
+} from "./pomodoro-types";
 
 export class Pomodoro {
 	public focusTime: number;
@@ -8,7 +12,7 @@ export class Pomodoro {
 	public autoStartBreak: boolean;
 	public autoStartFocus: boolean;
 
-	public state: State = 'paused';
+	public state: State = "paused";
 	constructor({
 		focusTime = SecondDurations.Minute * 25,
 		shortBreakTime = SecondDurations.Minute * 5,
