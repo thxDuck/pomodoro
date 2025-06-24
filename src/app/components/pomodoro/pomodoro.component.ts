@@ -1,14 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Temporal } from "temporal-polyfill";
 import { Pomodoro } from "../../models/pomodoro-model";
-import { SecondDurations } from "../../models/pomodoro-types";
+import { SecondDurations, State } from "../../models/pomodoro-types";
 import { handleAllValues } from "../../utilities/utilities";
 
 const ONE_SEC_DURATION = "PT1S";
-type PomodoroState = {
-	type: "focus" | "short_break" | "long_break";
-	duration: number;
-};
 
 @Component({
 	selector: "app-pomodoro",
@@ -18,95 +14,70 @@ type PomodoroState = {
 })
 export class PomodoroComponent implements OnInit {
 	public pomodoroSettings = new Pomodoro({
-		focusTime: SecondDurations.Second * 10,
-		shortBreakTime: SecondDurations.Second * 5,
-		longBreakTime: SecondDurations.Second * 30,
+		focusTime: SecondDurations.Second * 5,
+		shortBreakTime: SecondDurations.Second * 3,
+		longBreakTime: SecondDurations.Second * 15,
+		focusSessions: 2,
 		autoStartBreak: true,
 		autoStartFocus: true,
 	});
-	public stepsContext: PomodoroState[] = [];
 	public currentStepIndex = -1;
-	public currentStep!: PomodoroState;
+	public focusSessionCounter = 1;
 	public timerState: "running" | "paused" = "paused";
 	public timer?: number;
 	public timeRemaining!: Temporal.Duration;
 	public timerText = "--:--";
+	public currentState: State = "focus";
+	public currentSessionDuration = 0;
 
-	constructor() {
-		this.stepsContext = [
-			{
-				type: "focus",
-				duration: this.pomodoroSettings.focusTime,
-			},
-			{
-				type: "short_break",
-				duration: this.pomodoroSettings.shortBreakTime,
-			},
-			{ type: "focus", duration: this.pomodoroSettings.focusTime },
-			{
-				type: "short_break",
-				duration: this.pomodoroSettings.shortBreakTime,
-			},
-			{ type: "focus", duration: this.pomodoroSettings.focusTime },
-			{
-				type: "long_break",
-				duration: this.pomodoroSettings.longBreakTime,
-			},
-		];
-		this.currentStepIndex = -1;
+	ngOnInit(): void {
 		this.loadNextContext(true);
 	}
 
-	ngOnInit(): void {}
-	private getDurationFromSeconds(totalSeconds: number): Temporal.Duration {
-		const minutes = Math.floor(totalSeconds / 60);
-		const seconds = totalSeconds - minutes * 60;
-		return Temporal.Duration.from({ minutes, seconds });
-	}
-	private loadNextContext(isFirstInit = false) {
+	/* -------------------------------------------------------------------------- */
+	/*                                    Logic                                   */
+	/* -------------------------------------------------------------------------- */
+	private async loadNextContext(isFirstInit = false) {
 		this.stopTimer();
 		this.currentStepIndex =
-			(this.currentStepIndex + 1) % this.stepsContext.length;
-		console.log("Load step number ", this.currentStepIndex);
+			(this.currentStepIndex + 1) % (this.pomodoroSettings.focusSessions * 2);
 
-		const nextStep = this.stepsContext.at(this.currentStepIndex);
-		if (!nextStep) throw new Error("Invalid step !");
-		console.log(nextStep);
-		const duration = this.getDurationFromSeconds(nextStep?.duration);
+		if (isFirstInit) this.currentState = "focus";
+		else this.currentState = this.getState();
+
+		const totalDuration = this.getDurationByState(this.currentState);
+		this.currentSessionDuration = totalDuration;
+
+		const duration = this.getDurationFromSeconds(totalDuration);
 		this.timeRemaining = duration;
 		const { minutes, seconds } = duration;
 
 		this.updateChrono({ minutes, seconds });
 		this.updateProgressBar(0);
 
-		this.currentStep = nextStep;
-
 		if (isFirstInit) return;
-
 		if (this.currentStepIndex === 0) {
+			this.focusSessionCounter = 1;
 			console.log("End of steps !");
-			return
+			return;
 		}
 
-		switch (this.currentStep.type) {
+		switch (this.currentState) {
 			case "focus":
+				if (this.currentStepIndex % 2 === 0) this.focusSessionCounter++;
 				if (this.pomodoroSettings.autoStartFocus) this.runTimer();
 				break;
-			case "short_break":
+			case "shortBreak":
 				if (this.pomodoroSettings.autoStartBreak) this.runTimer();
 				break;
-			case "long_break":
+			case "longBreak":
 				if (this.pomodoroSettings.autoStartBreak) this.runTimer();
 				break;
-
 			default:
+				handleAllValues(this.currentState);
 				break;
 		}
 	}
-
-	/* -------------------------------------------------------------------------- */
-	/*                                    Logic                                   */
-	/* -------------------------------------------------------------------------- */
 
 	public stopTimer() {
 		this.timerState = "paused";
@@ -121,11 +92,11 @@ export class PomodoroComponent implements OnInit {
 		this.timer = window.setInterval(this.countDouwn.bind(this), 1000 / 4);
 	}
 
-	public countDouwn() {
+	private countDouwn() {
 		this.timeRemaining = this.timeRemaining.subtract(ONE_SEC_DURATION);
 		const secondsRemains = this.timeRemaining.total("seconds");
 		const totalPercent = Math.floor(
-			(secondsRemains * 100) / this.currentStep.duration,
+			(secondsRemains * 100) / this.currentSessionDuration,
 		);
 
 		this.updateChrono({
@@ -140,10 +111,40 @@ export class PomodoroComponent implements OnInit {
 	}
 
 	/* -------------------------------------------------------------------------- */
+	/*                                  Utilities                                 */
+	/* -------------------------------------------------------------------------- */
+
+	private getDurationFromSeconds(totalSeconds: number): Temporal.Duration {
+		const minutes = Math.floor(totalSeconds / 60);
+		const seconds = totalSeconds - minutes * 60;
+		return Temporal.Duration.from({ minutes, seconds });
+	}
+
+	public getState(): State {
+		const longBreakSession = this.pomodoroSettings.focusSessions * 2 - 1;
+		if (this.currentStepIndex === longBreakSession) return "longBreak";
+		return this.currentStepIndex % 2 ? "shortBreak" : "focus";
+	}
+
+	private getDurationByState(state: State) {
+		switch (state) {
+			case "focus":
+				return this.pomodoroSettings.focusTime;
+			case "shortBreak":
+				return this.pomodoroSettings.shortBreakTime;
+			case "longBreak":
+				return this.pomodoroSettings.longBreakTime;
+			default:
+				handleAllValues(state);
+				return 0;
+		}
+	}
+
+	/* -------------------------------------------------------------------------- */
 	/*                                 User Actions                               */
 	/* -------------------------------------------------------------------------- */
 
-	playButtonPress() {
+	public playButtonPress() {
 		switch (this.timerState) {
 			case "running":
 				this.stopTimer();
@@ -151,7 +152,6 @@ export class PomodoroComponent implements OnInit {
 			case "paused":
 				this.runTimer();
 				break;
-
 			default:
 				handleAllValues(this.timerState);
 				break;
@@ -162,11 +162,11 @@ export class PomodoroComponent implements OnInit {
 	/*                                    Html                                    */
 	/* -------------------------------------------------------------------------- */
 
-	public updateplayButton(type: "play" | "pause") {
+	private updateplayButton(type: "play" | "pause") {
 		const image = document.querySelector(".action .action__button img");
 		image?.setAttribute("src", `images/icons/${type}_icon.svg`);
 	}
-	public updateChrono(durations: { minutes: number; seconds: number }) {
+	private updateChrono(durations: { minutes: number; seconds: number }) {
 		const { minutes, seconds } = durations;
 		const nbSeconds = seconds < 10 ? `0${seconds}` : seconds;
 		this.timerText = `${minutes}:${nbSeconds}`;
@@ -176,7 +176,7 @@ export class PomodoroComponent implements OnInit {
 	 * Update timer style to match time spent
 	 * @param percent Percent of time past.
 	 */
-	updateProgressBar(percent: number): void {
+	private updateProgressBar(percent: number) {
 		const circle = document.querySelector(
 			".timer__progress-bar",
 		) as SVGCircleElement;
