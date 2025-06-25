@@ -3,12 +3,13 @@ import { Temporal } from "temporal-polyfill";
 import { Pomodoro } from "../../models/pomodoro-model";
 import { SecondDurations, State } from "../../models/pomodoro-types";
 import { handleAllValues } from "../../utilities/utilities";
+import { TimerComponent } from "../timer/timer.component";
 
 const ONE_SEC_DURATION = "PT1S";
 
 @Component({
 	selector: "app-pomodoro",
-	imports: [],
+	imports: [TimerComponent],
 	templateUrl: "./pomodoro.component.html",
 	styleUrl: "./pomodoro.component.scss",
 })
@@ -50,10 +51,6 @@ export class PomodoroComponent implements OnInit {
 
 		const duration = this.getDurationFromSeconds(totalDuration);
 		this.timeRemaining = duration;
-		const { minutes, seconds } = duration;
-
-		this.updateChrono({ minutes, seconds });
-		this.updateProgressBar(0);
 
 		if (isFirstInit) return;
 		if (this.currentStepIndex === 0) {
@@ -81,33 +78,17 @@ export class PomodoroComponent implements OnInit {
 
 	public stopTimer() {
 		this.timerState = "paused";
-		this.updateplayButton("play");
 		clearInterval(this.timer);
 	}
 
 	public runTimer() {
 		this.timerState = "running";
-		this.updateplayButton("pause");
-		// Binding of this beacause of the function calling system
-		this.timer = window.setInterval(this.countDouwn.bind(this), 1000 / 4);
+		this.timer = window.setInterval(this.countDouwn.bind(this), 1000);
 	}
 
 	private countDouwn() {
 		this.timeRemaining = this.timeRemaining.subtract(ONE_SEC_DURATION);
-		const secondsRemains = this.timeRemaining.total("seconds");
-		const totalPercent = Math.floor(
-			(secondsRemains * 100) / this.currentSessionDuration,
-		);
-
-		this.updateChrono({
-			minutes: this.timeRemaining.minutes,
-			seconds: this.timeRemaining.seconds,
-		});
-		this.updateProgressBar((100 - totalPercent) % 100);
-
-		if (this.timeRemaining.total("seconds") <= 0) {
-			this.loadNextContext();
-		}
+		if (this.timeRemaining.total("seconds") <= 0) this.loadNextContext();
 	}
 
 	/* -------------------------------------------------------------------------- */
@@ -155,41 +136,6 @@ export class PomodoroComponent implements OnInit {
 			default:
 				handleAllValues(this.timerState);
 				break;
-		}
-	}
-
-	/* -------------------------------------------------------------------------- */
-	/*                                    Html                                    */
-	/* -------------------------------------------------------------------------- */
-
-	private updateplayButton(type: "play" | "pause") {
-		const image = document.querySelector(".action .action__button img");
-		image?.setAttribute("src", `images/icons/${type}_icon.svg`);
-	}
-	private updateChrono(durations: { minutes: number; seconds: number }) {
-		const { minutes, seconds } = durations;
-		const nbSeconds = seconds < 10 ? `0${seconds}` : seconds;
-		this.timerText = `${minutes}:${nbSeconds}`;
-	}
-
-	/**
-	 * Update timer style to match time spent
-	 * @param percent Percent of time past.
-	 */
-	private updateProgressBar(percent: number) {
-		const circle = document.querySelector(
-			".timer__progress-bar",
-		) as SVGCircleElement;
-		const dot = document.querySelector(".timer__dot") as HTMLElement;
-
-		const radius = 45;
-		const circumference = 2 * Math.PI * radius;
-		const offset = circumference - (percent / 100) * circumference;
-
-		if (circle) circle.style.strokeDashoffset = `${offset}`;
-		if (dot) {
-			const angle = (percent / 100) * 360;
-			dot.style.transform = `translate(-50%, 0) rotate(${angle}deg)`;
 		}
 	}
 }
