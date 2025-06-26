@@ -3,13 +3,14 @@ import { Temporal } from "temporal-polyfill";
 import { Pomodoro } from "../../models/pomodoro-model";
 import { SecondDurations, State } from "../../models/pomodoro-types";
 import { handleAllValues } from "../../utilities/utilities";
+import { StepComponent } from "../step/step.component";
 import { TimerComponent } from "../timer/timer.component";
 
 const ONE_SEC_DURATION = "PT1S";
 
 @Component({
 	selector: "app-pomodoro",
-	imports: [TimerComponent],
+	imports: [TimerComponent, StepComponent],
 	templateUrl: "./pomodoro.component.html",
 	styleUrl: "./pomodoro.component.scss",
 })
@@ -42,7 +43,8 @@ export class PomodoroComponent implements OnInit {
 		this.stopTimer();
 		this.currentStepIndex =
 			(this.currentStepIndex + 1) % (this.pomodoroSettings.focusSessions * 2);
-
+		console.log(`currentStepIndex ${this.currentStepIndex}`);
+		console.log(`total ${this.pomodoroSettings.focusSessions * 2}`);
 		if (isFirstInit) this.currentState = "focus";
 		else this.currentState = this.getState();
 
@@ -83,7 +85,7 @@ export class PomodoroComponent implements OnInit {
 
 	public runTimer() {
 		this.timerState = "running";
-		this.timer = window.setInterval(this.countDouwn.bind(this), 1000);
+		this.timer = window.setInterval(this.countDouwn.bind(this), 1000 / 4);
 	}
 
 	private countDouwn() {

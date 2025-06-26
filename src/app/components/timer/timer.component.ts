@@ -2,8 +2,6 @@ import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { Temporal } from "temporal-polyfill";
 import { handleAllValues } from "../../utilities/utilities";
 
-const ONE_SEC_DURATION = "PT1S";
-
 type TimerState = "running" | "paused";
 @Component({
 	selector: "app-timer",
