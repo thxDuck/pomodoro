@@ -1,3 +1,5 @@
+@use "../../../../scss/variables.scss" as vars;
+
 nav {
 	display: flex;
 	flex-direction: row;
@@ -12,5 +14,13 @@ nav {
 		list-style: none;
 		cursor: pointer;
 		text-align: center;
+		transition: all .3s;
+
+		&.active {
+			transform: scale(1.7);
+			color: vars.$color-primary;
+		}
+
+
 	}
 }

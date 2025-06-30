@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Temporal } from "temporal-polyfill";
-import { Pomodoro } from "../../../../models/pomodoro-model";
-import { SecondDurations, State } from "../../../../models/pomodoro-types";
-import { handleAllValues } from "../../../../utilities/utilities";
-import { StepComponent } from "../step/step.component";
-import { TimerComponent } from "../timer/timer.component";
+import { Pomodoro } from "../../../models/pomodoro-model";
+import { SecondDurations, State } from "../../../models/pomodoro-types";
+import { handleAllValues } from "../../../utilities/utilities";
+import { StepComponent } from "./step/step.component";
+import { TimerComponent } from "./timer/timer.component";
 
 const ONE_SEC_DURATION = "PT1S";
 
