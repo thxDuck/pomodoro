@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { Temporal } from "temporal-polyfill";
-import { handleAllValues } from "../../utilities/utilities";
+import { handleAllValues } from "../../../../utilities/utilities";
 
 type TimerState = "running" | "paused";
 @Component({
