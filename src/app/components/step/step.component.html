@@ -1,0 +1,8 @@
+<div class="steps-container">
+  @for (step of steps; track step) {
+    <div class="step" [class.active]="currentStep >= step"></div>
+    @if (step < totalSteps - 1) {
+      <div class="line" [class.active]="currentStep > step"></div>
+    }
+  }
+</div>

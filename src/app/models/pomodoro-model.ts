@@ -12,7 +12,7 @@ export class Pomodoro {
 	public autoStartBreak: boolean;
 	public autoStartFocus: boolean;
 
-	public state: State = "paused";
+	public state: State = "focus";
 	constructor({
 		focusTime = SecondDurations.Minute * 25,
 		shortBreakTime = SecondDurations.Minute * 5,
