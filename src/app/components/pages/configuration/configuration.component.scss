@@ -1,0 +1,42 @@
+@use "../../../../scss/variables.scss" as vars;
+
+
+.configuration {
+    width: 100vw;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .row {
+            width: 90%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: baseline;
+
+            border-radius: 25rem;
+            padding: 0.7rem 1rem;
+            align-self: center;
+            gap: 0.5rem;
+
+            background-color: vars.$color-gray
+        }
+
+        label {
+            flex: 1;
+            color: darken($color: vars.$color-white, $amount: 25)
+        }
+
+        input {
+            // background-color: vars.$color-primary;
+            width: 100px;
+            text-align: end;
+            color: vars.$color-white
+        }
+
+        .unit {
+            width: min-content;
+        }
+    }
+}

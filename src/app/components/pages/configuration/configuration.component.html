@@ -1,1 +1,9 @@
-<section class="configuration"></section>
+<section class="configuration">
+  <form [formGroup]="pomodoroForm">
+    <div class="row">
+      <label for="focus-time">Focuse Time</label>
+      <input id="focus-time" type="number" formControlName="focusTime" />
+      <span class="unit">min</span>
+    </div>
+  </form>
+</section>
