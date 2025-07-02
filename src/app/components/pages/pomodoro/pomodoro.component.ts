@@ -43,8 +43,6 @@ export class PomodoroComponent implements OnInit {
 		this.stopTimer();
 		this.currentStepIndex =
 			(this.currentStepIndex + 1) % (this.pomodoroSettings.focusSessions * 2);
-		console.log(`currentStepIndex ${this.currentStepIndex}`);
-		console.log(`total ${this.pomodoroSettings.focusSessions * 2}`);
 		if (isFirstInit) this.currentState = "focus";
 		else this.currentState = this.getState();
 
@@ -57,7 +55,6 @@ export class PomodoroComponent implements OnInit {
 		if (isFirstInit) return;
 		if (this.currentStepIndex === 0) {
 			this.focusSessionCounter = 1;
-			console.log("End of steps !");
 			return;
 		}
 
