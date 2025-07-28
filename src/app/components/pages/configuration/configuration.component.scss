@@ -1,19 +1,22 @@
+@use "sass:color";
 @use "../../../../scss/variables.scss" as vars;
 
 
 .configuration {
     width: 100vw;
 
-    form {
+    .form {
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 0.8rem;
 
         .row {
             width: 90%;
+            height: 2rem;
             display: flex;
             justify-content: flex-end;
-            align-items: baseline;
+            align-items: center;
 
             border-radius: 25rem;
             padding: 0.7rem 1rem;
@@ -25,11 +28,10 @@
 
         label {
             flex: 1;
-            color: darken($color: vars.$color-white, $amount: 25)
+            color: color.scale($color: vars.$color-white, $lightness: 25%)
         }
 
         input {
-            // background-color: vars.$color-primary;
             width: 100px;
             text-align: end;
             color: vars.$color-white

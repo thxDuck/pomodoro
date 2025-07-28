@@ -20,8 +20,8 @@ export class PomodoroComponent implements OnInit {
 		shortBreakTime: SecondDurations.Second * 3,
 		longBreakTime: SecondDurations.Second * 15,
 		focusSessions: 2,
-		autoStartBreak: true,
-		autoStartFocus: true,
+		autoStartBreak: false,
+		autoStartFocus: false,
 	});
 	public currentStepIndex = -1;
 	public focusSessionCounter = 1;

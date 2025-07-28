@@ -1,9 +1,27 @@
 <section class="configuration">
-  <form [formGroup]="pomodoroForm">
+  <div class="form">
     <div class="row">
       <label for="focus-time">Focuse Time</label>
-      <input id="focus-time" type="number" formControlName="focusTime" />
+      <input id="focus-time" type="number" />
       <span class="unit">min</span>
     </div>
-  </form>
+
+    <div class="row">
+      <label for="shortBreakTime">Shoft Break</label>
+      <input id="shortBreakTime" type="number" />
+      <span class="unit">min</span>
+    </div>
+
+    <div class="row">
+      <label for="longBreakTime">Long Break</label>
+      <input id="longBreakTime" type="number" />
+      <span class="unit">min</span>
+    </div>
+
+    <div class="row">
+      <label for="intervals">Sections</label>
+      <input id="intervals" type="number" />
+      <span class="unit">intervals</span>
+    </div>
+  </div>
 </section>
