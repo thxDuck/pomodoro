@@ -31,19 +31,30 @@
     }
 
     &--open {
+        gap: 20px;
+
         .dropdown-select__list {
             display: block;
-            width: 100%;
+            // Add 2 rem for the 1rem padding each sides of parent container
+            width: calc(100% + 2rem);
+
+
+            overflow: hidden;
 
             &__item {
                 display: flex;
                 justify-content: center;
-
+                align-items: center;
                 min-height: 2rem;
-                width: 100%;
+                transition: height .3s;
+                transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+                    background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow: visible;
 
                 &:hover {
-                    background-color: aquamarine;
+                    z-index: 1;
+                    transform: scale(1.35);
+                    background-color: vars.$color-secondary;
                 }
             }
         }
