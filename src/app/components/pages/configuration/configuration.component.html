@@ -1,29 +1,36 @@
 <section class="configuration">
-  <div class="form">
-    <app-dropdown-select />
-
-    <div class="row">
-      <label for="focus-time">Focuse Time</label>
-      <input id="focus-time" type="number" />
-      <span class="unit">min</span>
-    </div>
-
-    <div class="row">
-      <label for="shortBreakTime">Shoft Break</label>
-      <input id="shortBreakTime" type="number" />
-      <span class="unit">min</span>
-    </div>
-
-    <div class="row">
-      <label for="longBreakTime">Long Break</label>
-      <input id="longBreakTime" type="number" />
-      <span class="unit">min</span>
-    </div>
-
-    <div class="row">
-      <label for="intervals">Sections</label>
-      <input id="intervals" type="number" />
-      <span class="unit">intervals</span>
-    </div>
-  </div>
+	<div class="form">
+		<app-dropdown-select
+			label="Focuse Time"
+			unit="min"
+			[min]="5"
+      [value]="25"
+			[max]="50"
+			[step]="5"
+		/>
+		<app-dropdown-select
+			label="Shoft Break"
+			unit="min"
+			[min]="1"
+      [value]="5"
+			[max]="25"
+			[step]="5"
+		/>
+		<app-dropdown-select
+			label="Long Break"
+			unit="min"
+			[min]="5"
+      [value]="15"
+			[max]="50"
+			[step]="5"
+		/>
+		<app-dropdown-select
+			label="Sections"
+			unit="intervals"
+			[min]="2"
+      [value]="4"
+			[max]="6"
+			[step]="1"
+		/>
+	</div>
 </section>

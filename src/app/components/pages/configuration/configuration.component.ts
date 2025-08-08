@@ -9,5 +9,5 @@ import { DropdownSelectComponent } from "../../commons/utils/form/dropdown-selec
 	styleUrl: "./configuration.component.scss",
 })
 export class ConfigurationComponent {
-
+	[x: string]: string;
 }
