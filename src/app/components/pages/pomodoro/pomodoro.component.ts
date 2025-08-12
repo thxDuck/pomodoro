@@ -1,7 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { Temporal } from "temporal-polyfill";
 import { Pomodoro } from "../../../models/pomodoro-model";
-import { SecondDurations, State } from "../../../models/pomodoro-types";
+import {
+	PomodoroSettings,
+	SecondDurations,
+	State,
+} from "../../../models/pomodoro-types";
+import { PomodoroConfigService } from "../../../services/pomodoro-config.service";
 import { handleAllValues } from "../../../utilities/utilities";
 import { StepComponent } from "./step/step.component";
 import { TimerComponent } from "./timer/timer.component";
@@ -15,14 +20,12 @@ const ONE_SEC_DURATION = "PT1S";
 	styleUrl: "./pomodoro.component.scss",
 })
 export class PomodoroComponent implements OnInit {
-	public pomodoroSettings = new Pomodoro({
-		focusTime: SecondDurations.Second * 5,
-		shortBreakTime: SecondDurations.Second * 3,
-		longBreakTime: SecondDurations.Second * 15,
-		focusSessions: 2,
-		autoStartBreak: false,
-		autoStartFocus: false,
-	});
+	public pomodoroSettings: PomodoroSettings;
+
+	constructor(private configurationService: PomodoroConfigService) {
+		this.pomodoroSettings = { ...this.configurationService.config() };
+	}
+
 	public currentStepIndex = -1;
 	public focusSessionCounter = 1;
 	public timerState: "running" | "paused" = "paused";
@@ -40,6 +43,10 @@ export class PomodoroComponent implements OnInit {
 	/*                                    Logic                                   */
 	/* -------------------------------------------------------------------------- */
 	private async loadNextContext(isFirstInit = false) {
+		console.log(
+			"this.configurationService.config : ",
+			this.configurationService.config(),
+		);
 		this.stopTimer();
 		this.currentStepIndex =
 			(this.currentStepIndex + 1) % (this.pomodoroSettings.focusSessions * 2);
@@ -82,7 +89,7 @@ export class PomodoroComponent implements OnInit {
 
 	public runTimer() {
 		this.timerState = "running";
-		this.timer = window.setInterval(this.countDouwn.bind(this), 1000 / 4);
+		this.timer = window.setInterval(this.countDouwn.bind(this), 1000);
 	}
 
 	private countDouwn() {
@@ -109,11 +116,11 @@ export class PomodoroComponent implements OnInit {
 	private getDurationByState(state: State) {
 		switch (state) {
 			case "focus":
-				return this.pomodoroSettings.focusTime;
+				return this.pomodoroSettings.focusTime * SecondDurations.Minute;
 			case "shortBreak":
-				return this.pomodoroSettings.shortBreakTime;
+				return this.pomodoroSettings.shortBreakTime * SecondDurations.Minute;
 			case "longBreak":
-				return this.pomodoroSettings.longBreakTime;
+				return this.pomodoroSettings.longBreakTime * SecondDurations.Minute;
 			default:
 				handleAllValues(state);
 				return 0;
