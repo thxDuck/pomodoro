@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Temporal } from "temporal-polyfill";
-import { Pomodoro } from "../../../models/pomodoro-model";
 import {
 	PomodoroSettings,
 	SecondDurations,
@@ -43,10 +42,6 @@ export class PomodoroComponent implements OnInit {
 	/*                                    Logic                                   */
 	/* -------------------------------------------------------------------------- */
 	private async loadNextContext(isFirstInit = false) {
-		console.log(
-			"this.configurationService.config : ",
-			this.configurationService.config(),
-		);
 		this.stopTimer();
 		this.currentStepIndex =
 			(this.currentStepIndex + 1) % (this.pomodoroSettings.focusSessions * 2);

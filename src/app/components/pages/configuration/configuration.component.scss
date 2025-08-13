@@ -1,4 +1,3 @@
-@use "sass:color";
 @use "../../../../scss/variables.scss" as vars;
 
 
@@ -15,7 +14,6 @@
             width: 100%;
         }
 
-
         .input-group {
             width: 90%;
             height: 2rem;
@@ -27,53 +25,32 @@
             align-self: center;
             gap: 0.5rem;
             background-color: vars.$color-gray;
+            transition: all .2s ease-in-out;
+
+            &:has(:focus-within) {
+                transform: scale(1.02);
+            }
 
             &__label {
-               margin-right: auto;
+                margin-right: auto;
             }
+
+            &__block {
+                padding-right: 0.7rem;
+                border-radius: 4px;
+                background-color: vars.$color-light_gray;
+
+            }
+
             &__input {
-              border: 1px solid vars.$color-light_gray;
-              padding: 0.5rem 0.7rem;
-              border-radius: 4px;
-              text-align: center;
+                font-weight: bolder;
+                padding: 0.5rem 0.7rem;
+                font-size: 1.2rem;
+
+                text-align: center;
             }
+
 
         }
-
-
-
-
-
-
-
-        // .row {
-        //     width: 90%;
-        //     height: 2rem;
-        //     display: flex;
-        //     justify-content: flex-end;
-        //     align-items: center;
-
-        //     border-radius: 20px;
-        //     padding: 0.7rem 1rem;
-        //     align-self: center;
-        //     gap: 0.5rem;
-
-        //     background-color: vars.$color-gray
-        // }
-
-        // label {
-        //     flex: 1;
-        //     color: color.scale($color: vars.$color-white, $lightness: 25%)
-        // }
-
-        // input {
-        //     width: 100px;
-        //     text-align: end;
-        //     color: vars.$color-white
-        // }
-
-        // .unit {
-        //     width: min-content;
-        // }
     }
 }

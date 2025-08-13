@@ -1,53 +1,67 @@
 <section class="configuration">
 	<div class="form">
-
-
 		<div class="input-group">
 			<label class="input-group__label" for="focusTime">Focus time</label>
-			<input
-				class="input-group__input"
-				type="number"
-				id="focusTime"
-				min="5"
-				value="25"
-				max="50"
-				step="1"
-			>
-			<span class="input-group__unit">min</span>
+			<div class="input-group__block">
+				<input
+					class="input-group__input"
+					type="number"
+					id="focusTime"
+					min="5"
+					[value]="this.pomodoroSettings.focusTime"
+					max="50"
+					step="1"
+				>
+				<span class="input-group__unit">min</span>
+			</div>
 		</div>
 
-		<!-- 
-		<app-dropdown-select
-			label="Focuse Time"
-			unit="min"
-			[min]="5"
-			[value]="25"
-			[max]="50"
-			[step]="5"
-		/>
-		<app-dropdown-select
-			label="Shoft Break"
-			unit="min"
-			[min]="1"
-			[value]="5"
-			[max]="25"
-			[step]="5"
-		/>
-		<app-dropdown-select
-			label="Long Break"
-			unit="min"
-			[min]="5"
-			[value]="15"
-			[max]="50"
-			[step]="5"
-		/>
-		<app-dropdown-select
-			label="Sections"
-			unit="intervals"
-			[min]="2"
-			[value]="4"
-			[max]="6"
-			[step]="1"
-		/> -->
+		<div class="input-group">
+			<label class="input-group__label" for="shortBreakTime">Short Break</label>
+			<div class="input-group__block">
+				<input
+					class="input-group__input"
+					type="number"
+					id="shortBreakTime"
+					min="5"
+					[value]="this.pomodoroSettings.shortBreakTime"
+					max="25"
+					step="1"
+				>
+				<span class="input-group__unit">min</span>
+			</div>
+		</div>
+
+		<div class="input-group">
+			<label class="input-group__label" for="longBreakTime">Long Break</label>
+			<div class="input-group__block">
+				<input
+					class="input-group__input"
+					type="number"
+					id="longBreakTime"
+					min="5"
+					[value]="this.pomodoroSettings.longBreakTime"
+					max="50"
+					step="1"
+				>
+				<span class="input-group__unit">min</span>
+			</div>
+		</div>
+
+		<div class="input-group">
+			<label class="input-group__label" for="focusSessions">Sections</label>
+			<div class="input-group__block">
+				<input
+					class="input-group__input"
+					type="number"
+					id="focusSessions"
+					min="5"
+					[value]="this.pomodoroSettings.focusSessions"
+					max="10"
+					step="1"
+				>
+				<span class="input-group__unit">min</span>
+			</div>
+		</div>
 	</div>
 </section>
