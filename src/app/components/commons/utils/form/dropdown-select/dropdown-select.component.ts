@@ -11,6 +11,7 @@ export class DropdownSelectComponent implements OnInit {
     for (let index = this.min; index <= this.max; index += this.step) {
       this.values.push(index);
     }
+    
   }
 
   isOpen = false;

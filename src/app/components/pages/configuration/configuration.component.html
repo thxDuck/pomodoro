@@ -1,5 +1,22 @@
 <section class="configuration">
 	<div class="form">
+
+
+		<div class="input-group">
+			<label class="input-group__label" for="focusTime">Focus time</label>
+			<input
+				class="input-group__input"
+				type="number"
+				id="focusTime"
+				min="5"
+				value="25"
+				max="50"
+				step="1"
+			>
+			<span class="input-group__unit">min</span>
+		</div>
+
+		<!-- 
 		<app-dropdown-select
 			label="Focuse Time"
 			unit="min"
@@ -31,6 +48,6 @@
 			[value]="4"
 			[max]="6"
 			[step]="1"
-		/>
+		/> -->
 	</div>
 </section>
