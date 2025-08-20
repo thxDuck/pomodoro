@@ -8,9 +8,10 @@
 					type="number"
 					id="focusTime"
 					min="5"
-					[value]="this.pomodoroSettings.focusTime"
 					max="50"
 					step="1"
+					[value]="pomodoroSettings().focusTime"
+					(input)="updateSetting('focusTime', $any($event.target).valueAsNumber)"
 				>
 				<span class="input-group__unit">min</span>
 			</div>
@@ -24,9 +25,10 @@
 					type="number"
 					id="shortBreakTime"
 					min="5"
-					[value]="this.pomodoroSettings.shortBreakTime"
 					max="25"
 					step="1"
+					[value]="this.pomodoroSettings().shortBreakTime"
+					(input)="updateSetting('shortBreakTime', $any($event.target).valueAsNumber)"
 				>
 				<span class="input-group__unit">min</span>
 			</div>
@@ -40,9 +42,10 @@
 					type="number"
 					id="longBreakTime"
 					min="5"
-					[value]="this.pomodoroSettings.longBreakTime"
 					max="50"
 					step="1"
+					[value]="this.pomodoroSettings().longBreakTime"
+					(input)="updateSetting('longBreakTime', $any($event.target).valueAsNumber)"
 				>
 				<span class="input-group__unit">min</span>
 			</div>
@@ -56,16 +59,29 @@
 					type="number"
 					id="focusSessions"
 					min="5"
-					[value]="this.pomodoroSettings.focusSessions"
 					max="10"
 					step="1"
+					[value]="this.pomodoroSettings().focusSessions"
+					(input)="updateSetting('focusSessions', $any($event.target).valueAsNumber)"
 				>
 				<span class="input-group__unit">min</span>
 			</div>
 		</div>
 		<div class="button-group">
-			<button type="button" class="button button--light">Cancel</button>
-			<button type="button" class="button button--valid">Save</button>
+			<button
+				type="button"
+				class="button button--light"
+				(click)="resetConfiguration()"
+			>
+				Cancel
+			</button>
+			<button
+				type="button"
+				class="button button--valid"
+				(click)="saveConfiguration()"
+			>
+				Save
+			</button>
 		</div>
 	</div>
 </section>
