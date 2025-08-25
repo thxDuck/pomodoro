@@ -1,4 +1,5 @@
 import { Component, signal } from "@angular/core";
+import { Router } from "@angular/router";
 import { PomodoroSettings } from "../../../models/pomodoro-types";
 import { PomodoroConfigService } from "../../../services/pomodoro-config.service";
 
@@ -19,16 +20,20 @@ export class ConfigurationComponent {
 	});
 	initalConfig: PomodoroSettings;
 
-	constructor(private configurationService: PomodoroConfigService) {
+	constructor(
+		private router: Router,
+		private configurationService: PomodoroConfigService,
+	) {
 		this.pomodoroSettings.set(this.configurationService.config());
 		this.initalConfig = { ...this.configurationService.config() };
 	}
-	public saveConfiguration() {
-		console.log("this.pomodoroSettings : ", this.pomodoroSettings());
+	public async saveConfiguration() {
 		this.configurationService.updateConfig(this.pomodoroSettings());
+		this.router.navigateByUrl("/");
 	}
 	public resetConfiguration() {
-		console.log("resetConfiguration");
+		console.log("Waiting...");
+		console.log("Redirect");
 		this.pomodoroSettings.set(this.initalConfig);
 	}
 
