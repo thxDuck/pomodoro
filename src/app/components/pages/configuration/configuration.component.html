@@ -67,10 +67,26 @@
 				<span class="input-group__unit">min</span>
 			</div>
 		</div>
+
+		<div class="checkbox-container">
+			<span>Automatic break</span>
+			<label class="toggle-control">
+				<input type="checkbox" id="autobreak" checked="checked" >
+				<span class="control"></span>
+			</label>
+		</div>
+		<div class="checkbox-container">
+			<span>Automatic pause</span>
+			<label class="toggle-control">
+				<input type="checkbox" id="autopause" checked="checked" >
+				<span class="control"></span>
+			</label>
+		</div>
+
 		<div class="button-group">
 			<button
 				type="button"
-				class="button button--cancel"
+				class="button button--light"
 				(click)="resetConfiguration()"
 			>
 				Cancel
