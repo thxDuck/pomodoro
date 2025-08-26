@@ -1,19 +1,31 @@
 <section class="pomodoro">
-    <div class="task">
-        <input type="text" name="task" id="task" placeholder="Task: Create test suite.">
-    </div>
+	<div class="task">
+		<input
+			type="text"
+			name="task"
+			id="task"
+			placeholder="Task: Create test suite."
+		>
+	</div>
 
-    <div class="timer">
-        <app-timer [totalTime]="currentSessionDuration" [timeRemaining]="timeRemaining" [state]="timerState" />
-    </div>
+	<div class="timer">
+		<app-timer
+			[totalTime]="currentSessionDuration"
+			[timeRemaining]="timeRemaining"
+			[state]="timerState"
+		/>
+	</div>
 
-    <div class="status">
-        <app-step [totalSteps]="this.pomodoroSettings.focusSessions * 2" [currentStep]="currentStepIndex"/>
-    </div>
+	<div class="status">
+		<app-step
+			[totalSteps]="this.pomodoroSettings.focusSessions * 2"
+			[currentStep]="currentStepIndex"
+		/>
+	</div>
 
-    <div class="action">
-        <button class="action__button" (click)="playButtonPress()">
-            <img src="images/icons/play_icon.svg" alt="">
-        </button>
-    </div>
+	<div class="action">
+		<button class="action__button" (click)="playButtonPress()">
+			<img src="images/icons/play_icon.svg" alt="" >
+		</button>
+	</div>
 </section>
