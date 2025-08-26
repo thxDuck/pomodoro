@@ -1,0 +1,112 @@
+<section class="configuration">
+	<div class="form">
+		<div class="input-group">
+			<label class="input-group__label" for="focusTime">Focus time</label>
+			<div class="input-group__block">
+				<input
+					class="input-group__input"
+					type="number"
+					id="focusTime"
+					min="5"
+					max="50"
+					step="1"
+					[value]="pomodoroSettings().focusTime"
+					(input)="updateSetting('focusTime', $any($event.target).valueAsNumber)"
+				>
+				<span class="input-group__unit">min</span>
+			</div>
+		</div>
+
+		<div class="input-group">
+			<label class="input-group__label" for="shortBreakTime">Short Break</label>
+			<div class="input-group__block">
+				<input
+					class="input-group__input"
+					type="number"
+					id="shortBreakTime"
+					min="5"
+					max="25"
+					step="1"
+					[value]="this.pomodoroSettings().shortBreakTime"
+					(input)="updateSetting('shortBreakTime', $any($event.target).valueAsNumber)"
+				>
+				<span class="input-group__unit">min</span>
+			</div>
+		</div>
+
+		<div class="input-group">
+			<label class="input-group__label" for="longBreakTime">Long Break</label>
+			<div class="input-group__block">
+				<input
+					class="input-group__input"
+					type="number"
+					id="longBreakTime"
+					min="5"
+					max="50"
+					step="1"
+					[value]="this.pomodoroSettings().longBreakTime"
+					(input)="updateSetting('longBreakTime', $any($event.target).valueAsNumber)"
+				>
+				<span class="input-group__unit">min</span>
+			</div>
+		</div>
+
+		<div class="input-group">
+			<label class="input-group__label" for="focusSessions">Sections</label>
+			<div class="input-group__block">
+				<input
+					class="input-group__input"
+					type="number"
+					id="focusSessions"
+					min="5"
+					max="10"
+					step="1"
+					[value]="this.pomodoroSettings().focusSessions"
+					(input)="updateSetting('focusSessions', $any($event.target).valueAsNumber)"
+				>
+				<span class="input-group__unit">min</span>
+			</div>
+		</div>
+		<div class="checkbox-container">
+			<span>Automatic focus</span>
+			<label class="toggle-control">
+				<input
+					type="checkbox"
+					id="autofocus"
+					[checked]="this.pomodoroSettings().autoStartFocus"
+					(input)="updateSetting('autoStartFocus',$any($event.target).checked)"
+				>
+				<span class="control"></span>
+			</label>
+		</div>
+		<div class="checkbox-container">
+			<span>Automatic break</span>
+			<label class="toggle-control">
+				<input
+					type="checkbox"
+					id="autobreak"
+					[checked]="this.pomodoroSettings().autoStartBreak"
+					(input)="updateSetting('autoStartBreak',$any($event.target).checked)"
+				>
+				<span class="control"></span>
+			</label>
+		</div>
+
+		<div class="button-group">
+			<button
+				type="button"
+				class="button button--light"
+				(click)="resetConfiguration()"
+			>
+				Cancel
+			</button>
+			<button
+				type="button"
+				class="button button--valid"
+				(click)="saveConfiguration()"
+			>
+				Save
+			</button>
+		</div>
+	</div>
+</section>

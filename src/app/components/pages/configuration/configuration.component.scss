@@ -1,0 +1,209 @@
+@use "../../../../scss/variables.scss" as vars;
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+}
+
+.configuration {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+
+    .form {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+        flex: 1;
+
+        &>* {
+            width: 100%;
+            width: 90%;
+            height: 2.3rem;
+            display: flex;
+        }
+
+        .input-group {
+
+            justify-content: flex-end;
+            align-items: center;
+            border-radius: 20px;
+            padding: 0.7rem 1rem;
+            align-self: center;
+            gap: 0.5rem;
+            background-color: vars.$color-gray;
+            transition: all .2s ease-in-out;
+
+            &:has(:focus-within) {
+                transform: scale(1.02);
+            }
+
+            &__label {
+                margin-right: auto;
+            }
+
+            &__block {
+                padding-right: 0.7rem;
+                border-radius: 4px;
+                background-color: vars.$color-light_gray;
+
+            }
+
+            &__input {
+                font-weight: bolder;
+                padding: 0.5rem 0.7rem;
+                font-size: 1.2rem;
+
+                text-align: center;
+            }
+        }
+
+        .button-group {
+            width: 100%;
+            justify-content: center;
+            height: 3rem;
+            gap: 2rem;
+            margin-top: auto;
+            margin-bottom: 1rem;
+
+            .button {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                width: 33%;
+
+                text-align: center;
+                border-radius: 3rem;
+
+                cursor: pointer;
+                transition: all 0.1s ease;
+
+                &--valid {
+                    background-color: vars.$color-primary;
+
+                    box-shadow: 0px 0px 30px 3px rgba(102, 78, 255, 0.47);
+                    -webkit-box-shadow: 0px 0px 30px 3px rgba(102, 78, 255, 0.47);
+                    -moz-box-shadow: 0px 0px 30px 3px rgba(102, 78, 255, 0.47);
+
+                    &:hover {
+                        transform: scale(1.05);
+                        box-shadow: 0px 0px 30px 10px rgba(102, 78, 255, 0.47);
+                        -webkit-box-shadow: 0px 0px 30px 10px rgba(102, 78, 255, 0.47);
+                        -moz-box-shadow: 0px 0px 30px 10px rgba(102, 78, 255, 0.47);
+                    }
+
+                }
+
+                &--cancel {
+                    background-color: vars.$color-light_gray;
+                }
+            }
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    .checkbox-container {
+        display: flex;
+        justify-content: space-between;
+
+        // align-items: center;
+        span {
+            align-self: center;
+        }
+    }
+
+    /*
+    Thanks to Aria McKinley 
+    https://codepen.io/AriTheElk/pen/YmxYZr
+    */
+
+    $toggle-background-color-on: vars.$color-primary;
+    $toggle-background-color-off: vars.$color-light_gray;
+    $toggle-control-color: white;
+    $toggle-width: 65px;
+    $toggle-height: 35px;
+    $toggle-gutter: 5px;
+    $toggle-radius: 50%;
+    $toggle-control-speed: .15s;
+    $toggle-control-ease: ease-in-out;
+
+    // These are our computed variables
+    // change at your own risk.
+    $toggle-radius: calc($toggle-height / 2);
+    $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
+
+    .toggle-control {
+        position: relative;
+        padding-left: $toggle-width;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        user-select: none;
+
+        input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        input:checked~.control {
+            background-color: $toggle-background-color-on;
+
+            &:after {
+                left: $toggle-width - $toggle-control-size - $toggle-gutter;
+            }
+        }
+
+        .control {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: $toggle-height;
+            width: $toggle-width;
+            border-radius: $toggle-radius;
+            background-color: $toggle-background-color-off;
+            transition: background-color $toggle-control-speed $toggle-control-ease;
+
+            &:after {
+                content: "";
+                position: absolute;
+                left: $toggle-gutter;
+                top: $toggle-gutter;
+                width: $toggle-control-size;
+                height: $toggle-control-size;
+                border-radius: $toggle-radius;
+                background: $toggle-control-color;
+                transition: left $toggle-control-speed $toggle-control-ease;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+}
