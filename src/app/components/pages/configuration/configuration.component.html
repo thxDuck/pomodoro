@@ -67,18 +67,27 @@
 				<span class="input-group__unit">min</span>
 			</div>
 		</div>
-
 		<div class="checkbox-container">
-			<span>Automatic break</span>
+			<span>Automatic focus</span>
 			<label class="toggle-control">
-				<input type="checkbox" id="autobreak" checked="checked" >
+				<input
+					type="checkbox"
+					id="autofocus"
+					[checked]="this.pomodoroSettings().autoStartFocus"
+					(input)="updateSetting('autoStartFocus',$any($event.target).checked)"
+				>
 				<span class="control"></span>
 			</label>
 		</div>
 		<div class="checkbox-container">
-			<span>Automatic pause</span>
+			<span>Automatic break</span>
 			<label class="toggle-control">
-				<input type="checkbox" id="autopause" checked="checked" >
+				<input
+					type="checkbox"
+					id="autobreak"
+					[checked]="this.pomodoroSettings().autoStartBreak"
+					(input)="updateSetting('autoStartBreak',$any($event.target).checked)"
+				>
 				<span class="control"></span>
 			</label>
 		</div>

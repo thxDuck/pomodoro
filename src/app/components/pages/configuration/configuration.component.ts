@@ -32,8 +32,6 @@ export class ConfigurationComponent {
 		this.router.navigateByUrl("/");
 	}
 	public resetConfiguration() {
-		console.log("Waiting...");
-		console.log("Redirect");
 		this.pomodoroSettings.set(this.initalConfig);
 	}
 
